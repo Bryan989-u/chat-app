@@ -1,0 +1,64 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  padding: 20px;
+  margin: 0;
+}
+
+#username-box, #chat {
+  max-width: 500px;
+  margin: 20px auto;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ccc;
+}
+
+input {
+  padding: 10px;
+  margin: 5px 0;
+  font-size: 1rem;
+  width: 70%;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px;
+  font-size: 1rem;
+  width: 28%;
+  margin-left: 2%;
+  cursor: pointer;
+}
+
+#messages {
+  list-style-type: none;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#messages li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Mobile-friendly layout */
+@media screen and (max-width: 600px) {
+  input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%;
+    margin: 0;
+  }
+
+  #username-box, #chat {
+    width: 95%;
+    padding: 10px;
+  }
+}

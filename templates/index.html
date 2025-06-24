@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+</head>
+<body>
+  <div id="username-box">
+    <input id="username" placeholder="Enter your name" />
+    <button onclick="setUsername()">Join Chat</button>
+  </div>
+
+  <div id="chat" style="display:none">
+    <ul id="messages"></ul>
+    <input id="message" placeholder="Type a message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const socket = io();
+    let username = '';
+
+    // Load saved messages
+    fetch('/messages')
+      .then(res => res.json())
+      .then(data => {
+        data.messages.forEach(msg => {
+          const li = document.createElement('li');
+          li.textContent = msg.trim();
+          document.getElementById('messages').appendChild(li);
+        });
+      });
+
+    // Set username
+    function setUsername() {
+      const nameInput = document.getElementById('username');
+      if (nameInput.value.trim() !== '') {
+        username = nameInput.value.trim();
+        document.getElementById('username-box').style.display = 'none';
+        document.getElementById('chat').style.display = 'block';
+      }
+    }
+
+    // Receive messages
+    socket.on('message', function(msg) {
+      const li = document.createElement('li');
+      li.textContent = msg;
+      document.getElementById('messages').appendChild(li);
+    });
+
+    // Send messages
+    function sendMessage() {
+      const input = document.getElementById('message');
+      const msg = input.value.trim();
+      if (msg) {
+        socket.send(`${username}: ${msg}`);
+        input.value = '';
+      }
+    }
+  </script>
+</body>
+</html>
